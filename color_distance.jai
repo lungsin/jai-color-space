@@ -126,10 +126,11 @@ distance_CIEDE2000 :: (a: CIELAB, b: CIELAB, p: CIEDE2000_Params = .{}) -> float
         ifx abs(h1_p - h2_p) <= DEG_180_IN_RAD then
             h_p_sum * 0.5
         else {
-            ifx h_p_sum < DEG_360_IN_RAD then
-                (h_p_sum + DEG_360_IN_RAD) * 0.5
-            else
-                (h_p_sum - DEG_360_IN_RAD) * 0.5
+            delta := ifx h_p_sum < DEG_360_IN_RAD then
+                         +DEG_360_IN_RAD
+                     else
+                         -DEG_360_IN_RAD;
+            (h_p_sum + delta) * 0.5;
         }
     };
 
